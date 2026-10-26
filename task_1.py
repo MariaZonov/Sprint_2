@@ -1,14 +1,45 @@
-count_min = 0
+class Case:
+    def __init__(self, test_case_id, name, step_description, expected_result):
+        self.test_case_id = test_case_id
+        self.name = name
+        self.step_description = step_description
+        self.expected_result = expected_result
 
-a = '1h 45m,360s,25m,30m 120s,2h 60s'
-c = a.split(',')
-for z in c:
-    for time in z.split():
-        if 'h' in time:
-            count_min += int(time.replace('h', '')) * 60
-        elif 'm' in time:
-            count_min += int(time.replace('m', ''))
-        elif 's' in time:
-            count_min += int(time.replace('s', '')) / 60
+    def print_test_case_info(self):
+        print(f"ID тест-кейса:  {self.test_case_id}"
+              f"\nНазвание: {self.name}"
+              f"\nОписание шага: {self.step_description}"
+              f"\nОжидаемый результат: {self.expected_result}")
 
-print(count_min)
+class ExtendedCase(Case):
+    def __init__(self, test_case_id, name, step_description,
+             expected_result, precondition, environment):
+        
+        super().__init__(
+            test_case_id,
+            name,
+            step_description,
+            expected_result
+        )
+
+        self.precondition = precondition
+        self.environment = environment
+
+    def print_test_case_info(self):
+        print(f"ID тест-кейса:  {self.test_case_id}"
+              f"\nНазвание: {self.name}"
+              f"\nОписание шага: {self.step_description}"
+              f"\nОжидаемый результат: {self.expected_result}"
+              f"\nПредусловие: {self.precondition}"
+              f"\nОкружение: {self.environment}")
+
+case = ExtendedCase (
+            '1', 
+            'Наличие кнопки Принять', 
+            '1. Открыть вкладку приёма документов 2. Проверить наличие кнопки ', 
+            'Кнопка доступна', 
+            'Открыть сервис', 
+            'Яндекс Браузер')
+
+
+case.print_test_case_info()
